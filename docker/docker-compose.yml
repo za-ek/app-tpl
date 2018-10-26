@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql/mysql-server:5.7
+    container_name: zaek_mysql
+    restart: always
+    ports:
+    - 3306
+    volumes:
+    - ./db-dump:/docker-entrypoint-initdb.d
+    environment:
+    - MYSQL_ROOT_PASSWORD=cpOXij34OAC
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: zaek_pma
+    links:
+    - mysql
+    environment:
+    - PMA_HOST=mysql
+    restart: always
+    ports:
+    - 8080:80
+
+  php:
+    container_name: zaek_fpm
+    image: zaek_php
+    volumes:
+    - "../app/:/home/zaek"
+    links:
+    - mysql
+
+  nginx:
+    container_name: zaek_nginx
+    image: nginx:latest
+    ports:
+    - "8088:80"
+    volumes:
+    - "../app/:/home/zaek"
+    - ./nginx.conf:/etc/nginx/conf.d/site.conf
+    links:
+    - php
