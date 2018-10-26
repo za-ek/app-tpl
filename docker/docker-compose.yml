@@ -30,6 +30,8 @@ services:
     - "../app/:/home/zaek"
     links:
     - mysql
+    - memcached
+    - redis
 
   nginx:
     container_name: zaek_nginx
@@ -41,3 +43,11 @@ services:
     - ./nginx.conf:/etc/nginx/conf.d/site.conf
     links:
     - php
+
+  memcached:
+    container_name: zaek_mc
+    image: memcached:latest
+
+  redis:
+    container_name: zaek_redis
+    image: redis:latest
