@@ -1,3 +1,5 @@
+-- Make a file in the folder db-dump
+-- with name like "000-db.sql" where 000 is the order of command execution and "db" is a human-readable name of containing commands
 
 CREATE DATABASE IF NOT EXISTS zaek COLLATE=utf8_general_ci;
 
